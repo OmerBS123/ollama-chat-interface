@@ -29,7 +29,7 @@ Before getting started, ensure you have the following installed:
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repo-url>
+git clone git@github.com:OmerBS123/ollama-chat-interface.git
 cd oss-chatbot
 ```
 
