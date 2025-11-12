@@ -2,6 +2,8 @@
 
 A production-ready Chainlit-based chat interface for interacting with local Ollama LLM models. Chat with powerful AI models running entirely on your machine - no cloud dependency, complete privacy.
 
+> **Screenshots:** See the [`screen_shots`](screen_shots/) folder for visual examples of the interface.
+
 ## Requirements
 
 Before getting started, ensure you have the following installed:
