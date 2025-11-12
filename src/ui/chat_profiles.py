@@ -50,7 +50,9 @@ async def chat_profiles() -> list[ChatProfile]:
                 model_family = getattr(model, "family", None)
                 # ModelInfo.size is in bytes, convert to MB for display
                 model_size_bytes = getattr(model, "size", None)
-                model_size_str = f"{model_size_bytes / (1024*1024):.1f}MB" if model_size_bytes else None
+                model_size_str = (
+                    f"{model_size_bytes / (1024 * 1024):.1f}MB" if model_size_bytes else None
+                )
 
                 # Create description
                 description_parts = [f"**{model_name}**"]
@@ -108,7 +110,9 @@ async def chat_profiles() -> list[ChatProfile]:
 
             profiles.append(
                 ChatProfile(
-                    name=model_name, markdown_description=description, icon="☁️"  # Cloud icon
+                    name=model_name,
+                    markdown_description=description,
+                    icon="☁️",  # Cloud icon
                 )
             )
             logger.debug(f"Added cloud model profile: {model_name}")
@@ -125,7 +129,9 @@ async def chat_profiles() -> list[ChatProfile]:
         profiles.append(
             ChatProfile(
                 name="llama3",
-                markdown_description="**llama3** • Default model • Use `/models pull llama3` to download",
+                markdown_description=(
+                    "**llama3** • Default model • Use `/models pull llama3` to download"
+                ),
                 icon="🦙",
             )
         )

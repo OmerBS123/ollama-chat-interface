@@ -46,7 +46,10 @@ async def on_settings_update(settings: dict[str, Any]) -> None:
         max_tokens=max_tokens_value,
     )
     cl.user_session.set("parameters", params)
-    logger.debug(f"Updated parameters: temp={params.temperature}, top_p={params.top_p}, max_tokens={params.max_tokens}")
+    logger.debug(
+        f"Updated parameters: temp={params.temperature}, "
+        f"top_p={params.top_p}, max_tokens={params.max_tokens}"
+    )
 
     # Update system prompt
     if "system_prompt" in settings:

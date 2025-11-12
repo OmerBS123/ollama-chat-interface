@@ -32,16 +32,21 @@ class TestFullChatSession:
             yield " you"
             yield " today?"
 
-        with patch("ollama.chat", return_value=iter([
-            {"message": {"content": "Hello"}},
-            {"message": {"content": " there!"}},
-            {"message": {"content": " How"}},
-            {"message": {"content": " can"}},
-            {"message": {"content": " I"}},
-            {"message": {"content": " help"}},
-            {"message": {"content": " you"}},
-            {"message": {"content": " today?"}},
-        ])):
+        with patch(
+            "ollama.chat",
+            return_value=iter(
+                [
+                    {"message": {"content": "Hello"}},
+                    {"message": {"content": " there!"}},
+                    {"message": {"content": " How"}},
+                    {"message": {"content": " can"}},
+                    {"message": {"content": " I"}},
+                    {"message": {"content": " help"}},
+                    {"message": {"content": " you"}},
+                    {"message": {"content": " today?"}},
+                ]
+            ),
+        ):
             # Step 1: Initialize session state
             model = "llama3"
             params = ModelParameters(temperature=0.7, top_p=0.9)
@@ -64,14 +69,14 @@ class TestFullChatSession:
 
             # Step 5: Save session to disk
             chat_messages = [
-                ChatMessage(role=msg["role"], content=msg["content"])
-                for msg in messages
+                ChatMessage(role=msg["role"], content=msg["content"]) for msg in messages
             ]
 
-            with patch("builtins.open", create=True), \
-                 patch("json.dump") as mock_json_dump, \
-                 patch("os.makedirs"):
-
+            with (
+                patch("builtins.open", create=True),
+                patch("json.dump") as mock_json_dump,
+                patch("os.makedirs"),
+            ):
                 save_session(
                     session_id="test-session",
                     model_name=model,
@@ -84,20 +89,32 @@ class TestFullChatSession:
                 mock_json_dump.assert_called_once()
 
             # Step 6: Verify we can load the session back
-            with patch("os.path.exists", return_value=True), \
-                 patch("builtins.open", create=True), \
-                 patch("json.load", return_value={
-                     "session_id": "test-session",
-                     "model_name": model,
-                     "messages": [
-                         {"role": "user", "content": user_message, "timestamp": "2025-01-01T00:00:00"},
-                         {"role": "assistant", "content": full_response, "timestamp": "2025-01-01T00:00:05"},
-                     ],
-                     "parameters": {"temperature": 0.7, "top_p": 0.9, "max_tokens": None},
-                     "system_prompt": system_prompt,
-                     "created_at": "2025-01-01T00:00:00",
-                 }):
-
+            with (
+                patch("os.path.exists", return_value=True),
+                patch("builtins.open", create=True),
+                patch(
+                    "json.load",
+                    return_value={
+                        "session_id": "test-session",
+                        "model_name": model,
+                        "messages": [
+                            {
+                                "role": "user",
+                                "content": user_message,
+                                "timestamp": "2025-01-01T00:00:00",
+                            },
+                            {
+                                "role": "assistant",
+                                "content": full_response,
+                                "timestamp": "2025-01-01T00:00:05",
+                            },
+                        ],
+                        "parameters": {"temperature": 0.7, "top_p": 0.9, "max_tokens": None},
+                        "system_prompt": system_prompt,
+                        "created_at": "2025-01-01T00:00:00",
+                    },
+                ),
+            ):
                 loaded_session = load_session("test-session")
 
                 assert loaded_session is not None
@@ -121,11 +138,13 @@ class TestFullChatSession:
             ["You're", " welcome!"],
         ]
 
-        for i, user_msg in enumerate([
-            "Hi there!",
-            "Tell me about Python.",
-            "Thanks!",
-        ]):
+        for i, user_msg in enumerate(
+            [
+                "Hi there!",
+                "Tell me about Python.",
+                "Thanks!",
+            ]
+        ):
             # Add user message
             conversation_history.append({"role": "user", "content": user_msg})
 

@@ -115,7 +115,8 @@ async def on_chat_start() -> None:
                 welcome_msg = (
                     f"Welcome! I'm your local LLM assistant.\n\n"
                     f"📥 **Model '{selected_model}' is not downloaded yet.**\n\n"
-                    f"Downloading it now... This may take a few minutes depending on model size.\n\n"
+                    f"Downloading it now... This may take a few minutes "
+                    f"depending on model size.\n\n"
                     f"💡 **Tips:**\n"
                     f"- You can switch to a downloaded model using the dropdown above\n"
                     f"- Type `/models list` to see your local models"
@@ -131,7 +132,9 @@ async def on_chat_start() -> None:
                 await download_msg.send()
 
                 try:
-                    download_msg.content = f"📦 **Downloading {selected_model}...**\n\nInitializing..."
+                    download_msg.content = (
+                        f"📦 **Downloading {selected_model}...**\n\nInitializing..."
+                    )
                     await download_msg.update()
 
                     # Pull the model with progress
@@ -140,7 +143,7 @@ async def on_chat_start() -> None:
                         # Extract progress info (handle None values)
                         status = progress.get("status", "")
                         completed = progress.get("completed") or 0  # Handle None
-                        total = progress.get("total") or 1          # Handle None
+                        total = progress.get("total") or 1  # Handle None
 
                         # Calculate percentage
                         if total and total > 0:
@@ -166,7 +169,9 @@ async def on_chat_start() -> None:
 
                         # Add size info if available
                         if total and total > 0:
-                            progress_text += f"**Size:** {completed_gb:.2f} GB / {total_gb:.2f} GB\n\n"
+                            progress_text += (
+                                f"**Size:** {completed_gb:.2f} GB / {total_gb:.2f} GB\n\n"
+                            )
 
                         # Add status if it changed
                         if status and status != last_status:
@@ -251,20 +256,35 @@ async def on_message(message: cl.Message) -> None:
             logger.debug(f"Processing file element: {element.name}, type: {element.mime}")
             try:
                 # Read file content
-                if hasattr(element, 'path'):
+                if hasattr(element, "path"):
                     logger.debug(f"Reading file from path: {element.path}")
-                    with open(element.path, encoding='utf-8', errors='ignore') as f:
+                    with open(element.path, encoding="utf-8", errors="ignore") as f:
                         file_content = f.read()
-                        file_contents.append(f"\n\n**File: {element.name}**\n```\n{file_content}\n```\n")
-                        logger.info(f"Successfully read file: {element.name} ({len(file_content)} chars)")
-                elif hasattr(element, 'content'):
+                        file_contents.append(
+                            f"\n\n**File: {element.name}**\n```\n{file_content}\n```\n"
+                        )
+                        logger.info(
+                            f"Successfully read file: {element.name} ({len(file_content)} chars)"
+                        )
+                elif hasattr(element, "content"):
                     # Some elements might have content directly
-                    file_content = element.content.decode('utf-8', errors='ignore') if isinstance(element.content, bytes) else str(element.content)
-                    file_contents.append(f"\n\n**File: {element.name}**\n```\n{file_content}\n```\n")
-                    logger.info(f"Successfully read file content: {element.name} ({len(file_content)} chars)")
+                    file_content = (
+                        element.content.decode("utf-8", errors="ignore")
+                        if isinstance(element.content, bytes)
+                        else str(element.content)
+                    )
+                    file_contents.append(
+                        f"\n\n**File: {element.name}**\n```\n{file_content}\n```\n"
+                    )
+                    logger.info(
+                        f"Successfully read file content: {element.name} "
+                        f"({len(file_content)} chars)"
+                    )
             except Exception as e:
                 logger.error(f"Error reading file {element.name}: {e}", exc_info=True)
-                file_contents.append(f"\n\n**File: {element.name}** (Error reading file: {str(e)})\n")
+                file_contents.append(
+                    f"\n\n**File: {element.name}** (Error reading file: {str(e)})\n"
+                )
 
         # Append file contents to message
         if file_contents:
@@ -290,7 +310,10 @@ async def on_message(message: cl.Message) -> None:
     params = cl.user_session.get("parameters")
     system_prompt = cl.user_session.get("system_prompt")
     history = cl.user_session.get("messages") or []
-    logger.debug(f"Session state: model={model}, history_length={len(history)}, has_system_prompt={system_prompt is not None}")
+    logger.debug(
+        f"Session state: model={model}, history_length={len(history)}, "
+        f"has_system_prompt={system_prompt is not None}"
+    )
 
     # Build message history in Ollama format
     messages: list[dict[str, str]] = []
@@ -322,7 +345,10 @@ async def on_message(message: cl.Message) -> None:
             chunk_count += 1
             await msg_out.update()
 
-        logger.info(f"Chat stream completed: {chunk_count} chunks received, {len(msg_out.content)} total chars")
+        logger.info(
+            f"Chat stream completed: {chunk_count} chunks received, "
+            f"{len(msg_out.content)} total chars"
+        )
         logger.debug(f"Response preview: {msg_out.content[:200]}...")
 
     except OllamaNotRunningError as e:

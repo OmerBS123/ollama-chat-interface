@@ -50,6 +50,8 @@ cp .env.example .env
 
 > **Note:** The `.env` file is gitignored for security. Never commit your `.env` file to version control. The `.env.example` file is intentionally tracked to provide configuration guidance.
 
+For detailed information about all available environment variables and how to configure them, see the [Configuration](#configuration) section.
+
 ### 4. Start Ollama Daemon
 
 ```bash

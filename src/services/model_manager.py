@@ -31,16 +31,16 @@ def list_cloud_models() -> list[ModelInfo]:
     # Curated list of popular, verified Ollama models
     # These are guaranteed to exist and be pullable from Ollama Hub
     popular_models = [
-        "llama3.2",           # Latest Llama 3.2 (small, fast)
-        "llama3.2:3b",        # Llama 3.2 3B parameters
-        "mistral",            # Mistral 7B (excellent quality)
-        "gemma2",             # Google's Gemma 2
-        "qwen2.5",            # Alibaba's Qwen 2.5
-        "phi3",               # Microsoft Phi-3 (small but capable)
-        "codellama",          # Code-specialized Llama
-        "deepseek-coder",     # Excellent for coding
-        "llama3.1",           # Llama 3.1 (previous version)
-        "mixtral",            # Mixtral 8x7B (powerful)
+        "llama3.2",  # Latest Llama 3.2 (small, fast)
+        "llama3.2:3b",  # Llama 3.2 3B parameters
+        "mistral",  # Mistral 7B (excellent quality)
+        "gemma2",  # Google's Gemma 2
+        "qwen2.5",  # Alibaba's Qwen 2.5
+        "phi3",  # Microsoft Phi-3 (small but capable)
+        "codellama",  # Code-specialized Llama
+        "deepseek-coder",  # Excellent for coding
+        "llama3.1",  # Llama 3.1 (previous version)
+        "mixtral",  # Mixtral 8x7B (powerful)
     ]
 
     model_infos = [ModelInfo(name=name) for name in popular_models]
@@ -75,7 +75,9 @@ def filter_models(models: list[ModelInfo], pattern: str) -> list[ModelInfo]:
 
         filtered = [m for m in models if regex.search(m.name)]
         logger.info(f"Filter matched {len(filtered)}/{len(models)} models")
-        logger.debug(f"Matched models: {[m.name for m in filtered[:10]]}{'...' if len(filtered) > 10 else ''}")
+        matched_names = [m.name for m in filtered[:10]]
+        ellipsis = "..." if len(filtered) > 10 else ""
+        logger.debug(f"Matched models: {matched_names}{ellipsis}")
 
         return filtered
 

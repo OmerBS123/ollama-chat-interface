@@ -12,7 +12,7 @@ settings = get_settings()
 setup_logging(log_level=settings.log_level, log_dir=settings.log_dir)
 
 # Now we can use logging
-import logging
+import logging  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -99,7 +99,7 @@ logger.info("Chat resume handler disabled - left sidebar will not be shown")
 
 # Import all handlers to register them with Chainlit
 logger.debug("Importing UI handlers...")
-from .ui import (
+from .ui import (  # noqa: E402
     actions,
     chat,
     chat_profiles,
@@ -107,7 +107,7 @@ from .ui import (
     model_management_button,
     system_actions,
 )
-from .ui import (
+from .ui import (  # noqa: E402
     settings as ui_settings,
 )
 

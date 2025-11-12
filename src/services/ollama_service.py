@@ -43,7 +43,10 @@ async def chat_stream(
         OllamaNotRunningError: If Ollama daemon is not running
     """
     logger.info(f"Starting chat stream with model: {model}")
-    logger.debug(f"Parameters: temp={params.temperature}, top_p={params.top_p}, max_tokens={params.max_tokens}")
+    logger.debug(
+        f"Parameters: temp={params.temperature}, top_p={params.top_p}, "
+        f"max_tokens={params.max_tokens}"
+    )
     logger.debug(f"Message count: {len(messages)}")
 
     # Log message history (truncate content for readability)
@@ -51,7 +54,7 @@ async def chat_stream(
         content_preview = msg.get("content", "")[:100]
         if len(msg.get("content", "")) > 100:
             content_preview += "..."
-        logger.debug(f"Message {i+1}: role={msg.get('role')}, content={content_preview}")
+        logger.debug(f"Message {i + 1}: role={msg.get('role')}, content={content_preview}")
 
     try:
         # Build options dict for Ollama
@@ -79,16 +82,21 @@ async def chat_stream(
                 logger.debug(f"Chunk {chunk_count}: {len(content)} chars")
                 yield content
 
-        logger.info(f"Chat stream completed: {chunk_count} chunks sent, {total_chars} total characters")
+        logger.info(
+            f"Chat stream completed: {chunk_count} chunks sent, {total_chars} total characters"
+        )
 
     except ResponseError as e:
         # Handle Ollama API errors (e.g., embedding models that don't support chat)
         if "does not support chat" in str(e):
             error_msg = (
-                f"⚠️ **Error:** The model `{model}` is an embedding model and cannot be used for chat.\n\n"
-                f"**Embedding models** are designed for generating text embeddings (vector representations), "
+                f"⚠️ **Error:** The model `{model}` is an embedding model "
+                f"and cannot be used for chat.\n\n"
+                f"**Embedding models** are designed for generating text "
+                f"embeddings (vector representations), "
                 f"not for conversational responses.\n\n"
-                f"**Solution:** Please select a chat model from the settings, such as:\n"
+                f"**Solution:** Please select a chat model from the settings, "
+                f"such as:\n"
                 f"- llama3\n"
                 f"- mistral\n"
                 f"- gemma\n"
@@ -121,7 +129,9 @@ def list_local_models() -> list[ModelInfo]:
     try:
         logger.debug("Calling ollama.list() API")
         result = ollama.list()  # Returns: {"models": [...]}
-        logger.debug(f"Received response from ollama.list(): {len(result.get('models', []))} models")
+        logger.debug(
+            f"Received response from ollama.list(): {len(result.get('models', []))} models"
+        )
 
         models = result.get("models", [])
 
@@ -139,23 +149,28 @@ def list_local_models() -> list[ModelInfo]:
             # Access Pydantic model attributes directly
             # Try 'model' attribute first (likely correct), fallback to 'name'
             model_name = None
-            if hasattr(m, 'model') and m.model:
+            if hasattr(m, "model") and m.model:
                 model_name = m.model
                 logger.debug(f"Model {i}: Using 'model' attribute = '{model_name}'")
-            elif hasattr(m, 'name') and m.name:
+            elif hasattr(m, "name") and m.name:
                 model_name = m.name
                 logger.debug(f"Model {i}: Using 'name' attribute = '{model_name}'")
             else:
                 model_name = str(m)  # Fallback to string representation
-                logger.warning(f"Model {i}: Could not find name/model attribute, using string representation: {model_name}")
+                logger.warning(
+                    f"Model {i}: Could not find name/model attribute, "
+                    f"using string representation: {model_name}"
+                )
 
             # Access other attributes directly (not with .get())
             model_info = ModelInfo(
                 name=model_name,
-                size=getattr(m, 'size', None),
-                modified_at=getattr(m, 'modified_at', None),
-                digest=getattr(m, 'digest', None),
-                family=getattr(getattr(m, 'details', None), 'family', None) if hasattr(m, 'details') else None,
+                size=getattr(m, "size", None),
+                modified_at=getattr(m, "modified_at", None),
+                digest=getattr(m, "digest", None),
+                family=getattr(getattr(m, "details", None), "family", None)
+                if hasattr(m, "details")
+                else None,
             )
             logger.debug(f"Model {i}: Created ModelInfo with name='{model_info.name}'")
             model_infos.append(model_info)
@@ -163,7 +178,7 @@ def list_local_models() -> list[ModelInfo]:
         logger.info(f"Found {len(model_infos)} local models")
         # Log model details at debug level
         for model in model_infos:
-            size_mb = f"{model.size / (1024*1024):.1f}MB" if model.size else "unknown size"
+            size_mb = f"{model.size / (1024 * 1024):.1f}MB" if model.size else "unknown size"
             logger.debug(f"Model: {model.name}, family={model.family}, size={size_mb}")
 
         return model_infos
