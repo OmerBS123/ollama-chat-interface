@@ -1,0 +1,312 @@
+/*
+ * Custom CSS for ChatGPT-like Interface
+ *
+ * This stylesheet customizes the Chainlit UI to provide a cleaner,
+ * more modern look inspired by ChatGPT's interface.
+ */
+
+/* ========== General Layout ========== */
+
+/* Main chat container - center and constrain width */
+#main-content {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Clean background */
+body {
+  background-color: #212121;
+}
+
+/* ========== Welcome Screen ========== */
+
+/* Center the avatar on welcome screen */
+.step-container:first-child {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 50vh;
+}
+
+/* ========== Messages ========== */
+
+/* Message bubbles - cleaner appearance */
+.message {
+  padding: 1.5rem 1rem;
+  border-radius: 12px;
+  margin-bottom: 1rem;
+  background-color: transparent !important;
+}
+
+/* User messages */
+.message.user {
+  background-color: #2a2a2a !important;
+}
+
+/* Assistant messages */
+.message.assistant {
+  background-color: transparent !important;
+}
+
+/* Message content spacing */
+.message-content {
+  line-height: 1.7;
+  font-size: 16px;
+}
+
+/* Avatar styling */
+.message-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  margin-right: 12px;
+}
+
+/* ========== Input Area ========== */
+
+/* Input container - cleaner look */
+#chat-input-container {
+  background-color: #2a2a2a;
+  border-radius: 24px;
+  padding: 12px 20px;
+  margin: 20px 0;
+  border: 1px solid #444;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+/* Input field itself */
+#chat-input {
+  background-color: transparent;
+  border: none;
+  color: #ececec;
+  font-size: 16px;
+  padding: 8px 0;
+}
+
+#chat-input:focus {
+  outline: none;
+  border: none;
+}
+
+/* Send button */
+button[type="submit"] {
+  background-color: #fff;
+  color: #000;
+  border-radius: 12px;
+  padding: 8px 16px;
+  transition: all 0.2s;
+}
+
+button[type="submit"]:hover {
+  background-color: #e0e0e0;
+}
+
+/* ========== Chat Profiles Dropdown ========== */
+
+/* Style the chat profile selector to look like ChatGPT's model selector */
+.chat-profile-selector {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 12px;
+  color: #ececec;
+  padding: 8px 16px;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.chat-profile-selector:hover {
+  background-color: #333;
+  border-color: #555;
+}
+
+/* Profile dropdown options */
+.chat-profile-option {
+  padding: 12px 16px;
+  background-color: #2a2a2a;
+  color: #ececec;
+  border-bottom: 1px solid #444;
+}
+
+.chat-profile-option:hover {
+  background-color: #333;
+}
+
+/* ========== Settings Sidebar ========== */
+
+/* Minimize or hide settings sidebar by default */
+#settings-sidebar {
+  background-color: #1a1a1a;
+  border-left: 1px solid #333;
+}
+
+/* Settings widgets */
+.settings-widget {
+  margin-bottom: 16px;
+}
+
+.settings-widget label {
+  color: #ececec;
+  font-size: 14px;
+  font-weight: 500;
+  margin-bottom: 8px;
+}
+
+.settings-widget input,
+.settings-widget select {
+  background-color: #2a2a2a;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #ececec;
+  padding: 8px 12px;
+}
+
+/* ========== Action Buttons ========== */
+
+/* Cleaner action buttons */
+.action-button {
+  background-color: transparent;
+  border: 1px solid #444;
+  border-radius: 8px;
+  color: #ececec;
+  padding: 6px 12px;
+  font-size: 13px;
+  transition: all 0.2s;
+}
+
+.action-button:hover {
+  background-color: #333;
+  border-color: #555;
+}
+
+/* ========== Code Blocks ========== */
+
+/* Better code block styling */
+pre {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: auto;
+}
+
+code {
+  font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+  font-size: 14px;
+  color: #e0e0e0;
+}
+
+/* ========== Scrollbar ========== */
+
+/* Custom scrollbar for dark theme */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1a1a1a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* ========== Typography ========== */
+
+/* Improve overall typography */
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+  color: #ececec;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  color: #fff;
+  font-weight: 600;
+}
+
+/* ========== Hide Unnecessary Elements ========== */
+
+/* Hide watermark or branding if needed */
+.chainlit-watermark {
+  display: none;
+}
+
+/* Minimize header if too large */
+#app-header {
+  padding: 12px 20px;
+  background-color: #1a1a1a;
+  border-bottom: 1px solid #333;
+}
+
+/* ========== Loading States ========== */
+
+/* Better loading indicator */
+.loading-indicator {
+  color: #888;
+  font-style: italic;
+}
+
+/* Streaming dots animation */
+@keyframes dots {
+  0%, 20% { content: '.'; }
+  40% { content: '..'; }
+  60%, 100% { content: '...'; }
+}
+
+/* ========== Responsive Design ========== */
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+  #main-content {
+    padding: 0 12px;
+  }
+
+  .message {
+    padding: 1rem 0.75rem;
+  }
+
+  #chat-input-container {
+    border-radius: 16px;
+    padding: 10px 16px;
+  }
+}
+
+/* ========== Welcome Message Styling ========== */
+
+/* Center and style the welcome message */
+.step:first-child .message-content {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ========== Error Messages ========== */
+
+/* Style error messages */
+.error-message {
+  background-color: #3d1f1f;
+  border-left: 4px solid #d32f2f;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 12px 0;
+  color: #ffcdd2;
+}
+
+/* ========== Success Messages ========== */
+
+/* Style success messages */
+.success-message {
+  background-color: #1f3d1f;
+  border-left: 4px solid #4caf50;
+  padding: 12px 16px;
+  border-radius: 8px;
+  margin: 12px 0;
+  color: #c8e6c9;
+}
