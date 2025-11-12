@@ -88,13 +88,13 @@ async def show_history_list() -> None:
             [
                 cl.Action(
                     name=f"load_conv_{session_id}",
-                    label=f"📂 Load #{i+1}",
+                    label=f"📂 Load #{i + 1}",
                     description=f"Load: {session['preview'][:30]}",
                     payload={"session_id": session_id},
                 ),
                 cl.Action(
                     name=f"delete_conv_{session_id}",
-                    label=f"🗑️ Delete #{i+1}",
+                    label=f"🗑️ Delete #{i + 1}",
                     description=f"Delete: {session['preview'][:30]}",
                     payload={"session_id": session_id},
                 ),
@@ -155,9 +155,7 @@ async def on_load_conversation(action: cl.Action) -> None:
 
     if not session:
         logger.error(f"Failed to load conversation {session_id}")
-        await cl.Message(
-            content=f"❌ **Error:** Could not load conversation `{session_id}`"
-        ).send()
+        await cl.Message(content=f"❌ **Error:** Could not load conversation `{session_id}`").send()
         return
 
     logger.info(
@@ -192,9 +190,7 @@ async def on_load_conversation(action: cl.Action) -> None:
     # Display each message in the conversation
     for msg in session.messages:
         role_emoji = "👤" if msg.role == "user" else "🤖"
-        await cl.Message(
-            content=f"{role_emoji} **{msg.role.title()}:** {msg.content}"
-        ).send()
+        await cl.Message(content=f"{role_emoji} **{msg.role.title()}:** {msg.content}").send()
 
     logger.info(f"Successfully loaded and displayed conversation {session_id}")
 
@@ -213,9 +209,7 @@ async def on_delete_conversation(action: cl.Action) -> None:
     session = load_session(session_id)
     if not session:
         logger.error(f"Cannot delete - conversation {session_id} not found")
-        await cl.Message(
-            content=f"❌ **Error:** Conversation `{session_id}` not found"
-        ).send()
+        await cl.Message(content=f"❌ **Error:** Conversation `{session_id}` not found").send()
         return
 
     preview = session.messages[0].content[:50] if session.messages else "N/A"

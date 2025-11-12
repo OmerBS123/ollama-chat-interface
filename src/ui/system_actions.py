@@ -73,8 +73,8 @@ async def exit_app() -> None:
     logger.info("Application exit initiated by user")
     await cl.Message(
         content="👋 **Application shut down successfully!**\n\n"
-                "The Chainlit server has stopped.\n\n"
-                "**You can now close this browser tab.**"
+        "The Chainlit server has stopped.\n\n"
+        "**You can now close this browser tab.**"
     ).send()
     logger.debug("Goodbye message sent, initiating shutdown with 1s delay")
     await shutdown_app(delay_seconds=1.0)
@@ -113,8 +113,8 @@ async def on_stop_ollama_action(action: cl.Action) -> None:
     # Exit regardless of Ollama stop result
     await cl.Message(
         content="👋 **Shutting down...**\n\n"
-                "The Chainlit server has stopped.\n\n"
-                "**You can now close this browser tab.**"
+        "The Chainlit server has stopped.\n\n"
+        "**You can now close this browser tab.**"
     ).send()
     logger.debug("Goodbye message sent, initiating shutdown with 1s delay")
     await shutdown_app(delay_seconds=1.0)

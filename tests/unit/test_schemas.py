@@ -60,11 +60,7 @@ class TestModelParameters:
 
     def test_valid_parameters(self):
         """Test creating valid model parameters."""
-        params = ModelParameters(
-            temperature=0.7,
-            top_p=0.9,
-            max_tokens=2000
-        )
+        params = ModelParameters(temperature=0.7, top_p=0.9, max_tokens=2000)
 
         assert params.temperature == 0.7
         assert params.top_p == 0.9
@@ -114,11 +110,7 @@ class TestModelInfo:
 
     def test_valid_model_info(self):
         """Test creating valid model info."""
-        info = ModelInfo(
-            name="llama3:latest",
-            size=4500000000,
-            family="llama"
-        )
+        info = ModelInfo(name="llama3:latest", size=4500000000, family="llama")
 
         assert info.name == "llama3:latest"
         assert info.size == 4500000000

@@ -49,7 +49,9 @@ async def on_manage_models_action(action: cl.Action) -> None:
         if not models:
             logger.info("No local models found")
             await cl.Message(
-                content="**No models found locally.**\n\nUse `/models pull <name>` to download models.",
+                content=(
+                    "**No models found locally.**\n\nUse `/models pull <name>` to download models."
+                ),
             ).send()
             return
 
@@ -96,11 +98,7 @@ async def on_manage_models_action(action: cl.Action) -> None:
         logger.error(f"Ollama not running: {e}")
         await cl.Message(
             content=(
-                "**⚠️ Ollama is not running.**\n\n"
-                "Please start Ollama:\n"
-                "```bash\n"
-                "ollama serve\n"
-                "```"
+                "**⚠️ Ollama is not running.**\n\nPlease start Ollama:\n```bash\nollama serve\n```"
             ),
         ).send()
     except Exception as e:
@@ -161,7 +159,8 @@ async def on_delete_model_action(action: cl.Action) -> None:
                 status_msg.content = (
                     f"✅ **Model `{model_name}` deleted successfully!**\n\n"
                     f"The model has been removed from local storage.\n\n"
-                    f"💡 **Tip:** Refresh your browser (F5) or continue chatting with another model."
+                    f"💡 **Tip:** Refresh your browser (F5) or continue "
+                    f"chatting with another model."
                 )
                 await status_msg.update()
                 logger.info(f"Model {model_name} deleted successfully")
@@ -169,15 +168,13 @@ async def on_delete_model_action(action: cl.Action) -> None:
             except OllamaNotRunningError as e:
                 logger.error(f"Ollama not running during deletion: {e}")
                 status_msg.content = (
-                    "**⚠️ Ollama is not running.**\n\n"
-                    "Please start Ollama and try again."
+                    "**⚠️ Ollama is not running.**\n\nPlease start Ollama and try again."
                 )
                 await status_msg.update()
             except Exception as e:
                 logger.error(f"Failed to delete model {model_name}: {e}", exc_info=True)
                 status_msg.content = (
-                    f"❌ **Failed to delete `{model_name}`**\n\n"
-                    f"Error: {str(e)}\n\n"
+                    f"❌ **Failed to delete `{model_name}`**\n\nError: {str(e)}\n\n"
                 )
                 await status_msg.update()
 

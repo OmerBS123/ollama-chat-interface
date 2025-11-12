@@ -33,7 +33,11 @@ def save_session(
         system_prompt: Optional system prompt
     """
     logger.info(f"Saving session: {session_id}")
-    logger.debug(f"Session details: model={model_name}, messages_count={len(messages)}, has_system_prompt={system_prompt is not None}")
+    logger.debug(
+        f"Session details: model={model_name}, "
+        f"messages_count={len(messages)}, "
+        f"has_system_prompt={system_prompt is not None}"
+    )
 
     settings = get_settings()
     session_path = settings.session_data_dir / f"{session_id}.json"
@@ -61,7 +65,9 @@ def save_session(
         created_at=created_at,
         updated_at=datetime.now(),
     )
-    logger.debug(f"Created session object: created_at={created_at}, updated_at={session.updated_at}")
+    logger.debug(
+        f"Created session object: created_at={created_at}, updated_at={session.updated_at}"
+    )
 
     try:
         # Save to JSON file
@@ -97,7 +103,11 @@ def load_session(session_id: str) -> ChatSession | None:
             data = json.load(f)
             logger.debug(f"Loaded session data: {len(data.get('messages', []))} messages")
             session = ChatSession(**data)
-            logger.info(f"Successfully loaded session {session_id} (model: {session.model_name}, messages: {len(session.messages)})")
+            logger.info(
+                f"Successfully loaded session {session_id} "
+                f"(model: {session.model_name}, "
+                f"messages: {len(session.messages)})"
+            )
             return session
     except Exception as e:
         logger.error(f"Error loading session {session_id}: {e}", exc_info=True)
@@ -203,14 +213,16 @@ def list_sessions_detailed() -> list[dict]:
             session = load_session(session_id)
             if session:
                 preview = get_session_preview(session)
-                detailed_sessions.append({
-                    "session_id": session_id,
-                    "preview": preview,
-                    "message_count": len(session.messages),
-                    "model": session.model_name,
-                    "created_at": session.created_at,
-                    "updated_at": session.updated_at,
-                })
+                detailed_sessions.append(
+                    {
+                        "session_id": session_id,
+                        "preview": preview,
+                        "message_count": len(session.messages),
+                        "model": session.model_name,
+                        "created_at": session.created_at,
+                        "updated_at": session.updated_at,
+                    }
+                )
                 logger.debug(f"Added session {session_id} to detailed list")
         except Exception as e:
             logger.error(f"Error loading session {session_id} for detailed list: {e}")
